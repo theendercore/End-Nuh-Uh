@@ -1,5 +1,5 @@
-projectTitle = "Team Voided Template"
-modId = "template"
+projectTitle = "End, Nu Uh"
+modId = "endnuhuh"
 githubRepo = "Teamvoided/TeamVoidedTemplateMod"
 discordServerInviteId = "KZ5Q364hEg"
 authors = [ "WiredTomato", "TheEnderCore" ]
@@ -10,7 +10,7 @@ fabricApiVersion = "0.100.3+1.21"
 fabricLangKotlinVersion = "1.11.0+kotlin.2.0.0"
 license = "MIT"
 modules = [ ]
-modDescription = "Template Mod Description"
+modDescription = "End, Nu Uh Mod Description"
 # Modmenu badges, values can be: [ library, deprecated ]
 badges = [ ]
 disableKotlin = false
