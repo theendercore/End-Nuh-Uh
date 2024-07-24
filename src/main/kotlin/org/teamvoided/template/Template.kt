@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory
 
 @Suppress("unused")
 object Template {
-    const val MODID = "template"
+    const val MODID = "endnuhuh"
 
     @JvmField
     val log: Logger = LoggerFactory.getLogger(Template::class.simpleName)
