@@ -28,7 +28,7 @@ repositories {
 println("Task: " + gradle.startParameter.taskNames.joinToString(","))
 
 modSettings {
-    entrypoint("main", "org.teamvoided.endnuuh.EndNuUh::init")
+    entrypoint("main", "org.teamvoided.endnuhuh.EndNuhUh::init")
 //    entrypoint("client", "org.teamvoided.endnuuh.TemplateClient::init")
 //    entrypoint("fabric-datagen", "org.teamvoided.endnuuh.data.gen.TemplateData")
 

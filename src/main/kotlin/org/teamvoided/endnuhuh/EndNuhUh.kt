@@ -5,11 +5,11 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 @Suppress("unused")
-object EndNuUh {
+object EndNuhUh {
     const val MODID = "endnuhuh"
 
     @JvmField
-    val log: Logger = LoggerFactory.getLogger(EndNuUh::class.simpleName)
+    val log: Logger = LoggerFactory.getLogger(EndNuhUh::class.simpleName)
 
     fun init() {
         log.info("Hello from Common")

@@ -1,9 +1,9 @@
 package org.teamvoided.endnuhuh
 
-import org.teamvoided.endnuhuh.EndNuUh.log
+import org.teamvoided.endnuhuh.EndNuhUh.log
 
 @Suppress("unused")
-object TemplateClient{
+object EndNuhUhClient{
     fun init() {
         log.info("Hello from Client")
     }
