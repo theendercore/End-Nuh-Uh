@@ -1,4 +1,4 @@
-package org.teamvoided.template
+package org.teamvoided.endnuhuh
 
 import net.minecraft.item.ItemUsageContext
 import net.minecraft.particle.DustParticleEffect

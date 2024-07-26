@@ -1,6 +1,6 @@
-package org.teamvoided.template
+package org.teamvoided.endnuhuh
 
-import org.teamvoided.template.Template.log
+import org.teamvoided.endnuhuh.EndNuUh.log
 
 @Suppress("unused")
 object TemplateClient{

@@ -1,4 +1,4 @@
-package org.teamvoided.template.mixin;
+package org.teamvoided.endnuhuh.mixin;
 
 import net.minecraft.item.EnderEyeItem;
 import net.minecraft.item.ItemUsageContext;
@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.teamvoided.template.EyeFailLogic;
+import org.teamvoided.endnuhuh.EyeFailLogic;
 
 
 @Mixin(EnderEyeItem.class)
