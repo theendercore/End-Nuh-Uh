@@ -4,7 +4,8 @@
   "package": "org.teamvoided.endnuhuh.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "EnderEyeItemMixin"
+    "EnderEyeItemMixin",
+    "EndPortalFrameBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1
