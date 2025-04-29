@@ -18,8 +18,6 @@ public class EnderEyeItemMixin {
 
     @Inject(method = "useOnBlock", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;with(Lnet/minecraft/state/property/Property;Ljava/lang/Comparable;)Ljava/lang/Object;"), cancellable = true)
     private void disablePortal(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir) {
-        if (tryDisablePortal(context)) {
-            cir.setReturnValue(ActionResult.PASS);
-        }
+        if (tryDisablePortal(context)) cir.setReturnValue(ActionResult.PASS);
     }
 }

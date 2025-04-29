@@ -14,7 +14,6 @@ import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.ActionResult
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 
 object EndLogic {
@@ -28,14 +27,14 @@ object EndLogic {
 
         if (EndNuhUhEvents.PRE_INSERT.invoker().interact(pos, state, world, player)) return false
 
-        if (player.isCreative) return false
+        if (player.isInCreativeMode) return false
 
         world.setBlockState(pos, state.with(EndPortalFrameBlock.EYE, true), Block.UPDATE_NONE)
         val testVal = EndPortalFrameBlock.getCompletedFramePattern().searchAround(world, pos)
         if (testVal != null) {
             world.setBlockState(pos, state.with(EndPortalFrameBlock.EYE, false), Block.UPDATE_NONE)
             world.spawnParticles(
-                DustParticleEffect(Vec3d.unpackRgb(0x69a395).toVector3f(), .7f),
+                DustParticleEffect(0x69a395, .7f),
                 pos.x + 0.5,
                 pos.y + (14.0 / 16),
                 pos.z + 0.5,
@@ -53,7 +52,7 @@ object EndLogic {
     fun removeEye(state: BlockState, world: World, pos: BlockPos, player: PlayerEntity): ActionResult? {
         if (EndNuhUhEvents.PRE_REMOVE.invoker().interact(pos, state, world, player)) return null
 
-        if (state.get(EndPortalFrameBlock.EYE) && player.mainHandStack.isEmpty && player.isSneaking) {
+        if (state.get(EndPortalFrameBlock.EYE) == true && player.mainHandStack.isEmpty && player.isSneaking) {
 
             world.playSound(null, pos, SoundEvents.ENTITY_ENDER_EYE_LAUNCH, SoundCategory.BLOCKS, 0.5f, 3.2f)
 
@@ -73,7 +72,7 @@ object EndLogic {
 
             world.setBlockState(pos, state.with(EndPortalFrameBlock.EYE, false))
 
-            if (!player.isCreative) {
+            if (!player.isInCreativeMode) {
                 val item = ItemEntity(
                     world,
                     pos.x + 0.5,
