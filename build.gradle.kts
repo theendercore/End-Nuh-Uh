@@ -12,13 +12,6 @@ plugins {
     alias(libs.plugins.iridium.upload)
 }
 
-group = property("maven_group")!!
-version = property("mod_version")!!
-base.archivesName.set(modSettings.modId())
-
-val modrinth_id: String? by project
-val curse_id: String? by project
-
 repositories {
     maven("https://teamvoided.org/releases")
     maven("https://maven.terraformersmc.com/") { name = "Terraformers" }
@@ -29,12 +22,11 @@ println("Task: " + gradle.startParameter.taskNames.joinToString(","))
 
 modSettings {
     entrypoint("main", "org.teamvoided.endnuhuh.EndNuhUh::init")
+    mixinFile("${modId()}.mixins.json")
 //    entrypoint("client", "org.teamvoided.endnuuh.TemplateClient::init")
 //    entrypoint("fabric-datagen", "org.teamvoided.endnuuh.data.gen.TemplateData")
 
 //    mixinFile("${modId()}.client.mixins.json")
-    mixinFile("${modId()}.mixins.json")
-//    accessWidener("${modId()}.accesswidener")
 }
 
 dependencies {
@@ -58,7 +50,7 @@ loom {
             client()
             ideConfigGenerated(true)
             runDir("run")
-            programArgs("--quickPlaySingleplayer", "test")
+            programArgs("--quickPlaySingleplayer", "test", "--username", "vDev")
         }
     }
 }
@@ -90,8 +82,8 @@ publishScript {
 
 uploadConfig {
 //    debugMode = true
-    modrinthId = modrinth_id
-    curseId = curse_id
+    modrinthId = "Q2qswmhx"
+    curseId = ""
 
     // FabricApi
     modrinthDependency("P7dR8mSH", uploadConfig.REQUIRED)
