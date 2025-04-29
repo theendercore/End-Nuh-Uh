@@ -5,7 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "EnderEyeItemMixin",
-    "EndPortalFrameBlockMixin"
+    "AbstractBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1
