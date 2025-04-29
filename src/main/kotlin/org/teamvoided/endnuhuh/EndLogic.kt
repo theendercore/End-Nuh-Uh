@@ -15,6 +15,7 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.ActionResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import kotlin.jvm.optionals.getOrNull
 
 object EndLogic {
     @JvmStatic
@@ -29,10 +30,10 @@ object EndLogic {
 
         if (player.isInCreativeMode) return false
 
-        world.setBlockState(pos, state.with(EndPortalFrameBlock.EYE, true), Block.UPDATE_NONE)
+        world.setBlockState(pos, state.with(EndPortalFrameBlock.EYE, true), Block.SKIP_UPDATES)
         val testVal = EndPortalFrameBlock.getCompletedFramePattern().searchAround(world, pos)
         if (testVal != null) {
-            world.setBlockState(pos, state.with(EndPortalFrameBlock.EYE, false), Block.UPDATE_NONE)
+            world.setBlockState(pos, state.with(EndPortalFrameBlock.EYE, false), Block.SKIP_UPDATES)
             world.spawnParticles(
                 DustParticleEffect(0x69a395, .7f),
                 pos.x + 0.5,
@@ -42,7 +43,7 @@ object EndLogic {
                 0.1, 0.1, 0.1,
                 0.01
             )
-            world.playSound(null, pos, SoundEvents.ENTITY_ENDER_EYE_DEATH, SoundCategory.BLOCKS, 0.8f, 0.1f)
+            world.method_8396(null, pos, SoundEvents.ENTITY_ENDER_EYE_DEATH, SoundCategory.BLOCKS, 0.8f, 0.1f)
             return true
         }
         return false
@@ -52,9 +53,9 @@ object EndLogic {
     fun removeEye(state: BlockState, world: World, pos: BlockPos, player: PlayerEntity): ActionResult? {
         if (EndNuhUhEvents.PRE_REMOVE.invoker().interact(pos, state, world, player)) return null
 
-        if (state.get(EndPortalFrameBlock.EYE) == true && player.mainHandStack.isEmpty && player.isSneaking) {
+        if (state.getOrEmpty(EndPortalFrameBlock.EYE).getOrNull() == true && player.mainHandStack.isEmpty && player.isSneaking) {
 
-            world.playSound(null, pos, SoundEvents.ENTITY_ENDER_EYE_LAUNCH, SoundCategory.BLOCKS, 0.5f, 3.2f)
+            world.method_8396(null, pos, SoundEvents.ENTITY_ENDER_EYE_LAUNCH, SoundCategory.BLOCKS, 0.5f, 3.2f)
 
             val result = EndPortalFrameBlock.getCompletedFramePattern().searchAround(world, pos)
             if (result != null) {
@@ -67,7 +68,7 @@ object EndLogic {
                         }
                     }
                 }
-                world.playSound(null, pos, SoundEvents.BLOCK_END_PORTAL_SPAWN, SoundCategory.BLOCKS, 1.0f, 10.0f)
+                world.method_8396(null, pos, SoundEvents.BLOCK_END_PORTAL_SPAWN, SoundCategory.BLOCKS, 1.0f, 10.0f)
             }
 
             world.setBlockState(pos, state.with(EndPortalFrameBlock.EYE, false))
