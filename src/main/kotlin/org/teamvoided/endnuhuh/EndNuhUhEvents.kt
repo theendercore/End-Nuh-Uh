@@ -7,7 +7,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-object EnNuhUhEvents {
+object EndNuhUhEvents {
     fun interface PreInsertCallback {
         fun interact(pos: BlockPos, state: BlockState, world: World, player: PlayerEntity): Boolean
     }

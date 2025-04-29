@@ -17,7 +17,7 @@ item in creative).
 This also disables active portals.
 
 ## For Developers
-This mod adds 2 event which can be found in `EnNuhUhEvents`, `PRE_INSERT` and `PRE_REMOVE`. With which you can disable End
+This mod adds 2 event which can be found in `EndNuhUhEvents`, `PRE_INSERT` and `PRE_REMOVE`. With which you can disable End
 Nuh Uh's behaviours. In case you want to prevent someone from taking eyes out or let someone finish the portal.
 
 ---

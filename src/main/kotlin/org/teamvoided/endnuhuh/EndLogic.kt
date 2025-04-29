@@ -26,7 +26,7 @@ object EndLogic {
         val state = world.getBlockState(pos)
         val player = c.player ?: return false
 
-        if (EnNuhUhEvents.PRE_INSERT.invoker().interact(pos, state, world, player)) return false
+        if (EndNuhUhEvents.PRE_INSERT.invoker().interact(pos, state, world, player)) return false
 
         if (player.isCreative) return false
 
@@ -51,7 +51,7 @@ object EndLogic {
 
     @JvmStatic
     fun removeEye(state: BlockState, world: World, pos: BlockPos, player: PlayerEntity): ActionResult? {
-        if (EnNuhUhEvents.PRE_REMOVE.invoker().interact(pos, state, world, player)) return null
+        if (EndNuhUhEvents.PRE_REMOVE.invoker().interact(pos, state, world, player)) return null
 
         if (state.get(EndPortalFrameBlock.EYE) && player.mainHandStack.isEmpty && player.isSneaking) {
 
