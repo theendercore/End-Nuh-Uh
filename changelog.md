@@ -1,0 +1,3 @@
+- Eyes can now be inserted, only the final eye cant
+- Removing an eye from a full portal diables the portal
+- EndNuhUh Events (PRE_INSERT, PRE_REMOVE)
