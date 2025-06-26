@@ -1,41 +1,41 @@
 package org.teamvoided.endnuhuh
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.block.EndPortalFrameBlock
-import net.minecraft.entity.ItemEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.ItemUsageContext
-import net.minecraft.item.Items
-import net.minecraft.particle.DustParticleEffect
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvents
-import net.minecraft.util.ActionResult
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
+import net.minecraft.core.BlockPos
+import net.minecraft.core.particles.DustParticleOptions
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.entity.item.ItemEntity
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.context.UseOnContext
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.EndPortalFrameBlock
+import net.minecraft.world.level.block.state.BlockState
 import kotlin.jvm.optionals.getOrNull
 
 object EndLogic {
     @JvmStatic
-    fun tryDisablePortal(c: ItemUsageContext): Boolean {
-        if (c.world !is ServerWorld) return true
-        val world = c.world as ServerWorld
-        val pos = c.blockPos
-        val state = world.getBlockState(pos)
+    fun tryDisablePortal(c: UseOnContext): Boolean {
+        if (c.level !is ServerLevel) return true
+        val level = c.level as ServerLevel
+        val pos = c.clickedPos
+        val state = level.getBlockState(pos)
         val player = c.player ?: return false
 
-        if (EndNuhUhEvents.PRE_INSERT.invoker().interact(pos, state, world, player)) return false
+        if (EndNuhUhEvents.PRE_INSERT.invoker().interact(pos, state, level, player)) return false
 
-        if (player.isInCreativeMode) return false
+        if (player.isCreative) return false
 
-        world.setBlockState(pos, state.with(EndPortalFrameBlock.EYE, true), Block.SKIP_UPDATES)
-        val testVal = EndPortalFrameBlock.getCompletedFramePattern().searchAround(world, pos)
+        level.setBlock(pos, state.setValue(EndPortalFrameBlock.HAS_EYE, true), Block.UPDATE_NONE)
+        val testVal = EndPortalFrameBlock.getOrCreatePortalShape().find(level, pos)
         if (testVal != null) {
-            world.setBlockState(pos, state.with(EndPortalFrameBlock.EYE, false), Block.SKIP_UPDATES)
-            world.spawnParticles(
-                DustParticleEffect(0x69a395, .7f),
+            level.setBlock(pos, state.setValue(EndPortalFrameBlock.HAS_EYE, false), Block.UPDATE_NONE)
+            level.sendParticles(
+                DustParticleOptions(0x69a395, .7f),
                 pos.x + 0.5,
                 pos.y + (14.0 / 16),
                 pos.z + 0.5,
@@ -43,50 +43,50 @@ object EndLogic {
                 0.1, 0.1, 0.1,
                 0.01
             )
-            world.method_8396(null, pos, SoundEvents.ENTITY_ENDER_EYE_DEATH, SoundCategory.BLOCKS, 0.8f, 0.1f)
+            level.playSound(null, pos, SoundEvents.ENDER_EYE_DEATH, SoundSource.BLOCKS, 0.8f, 0.1f)
             return true
         }
         return false
     }
 
     @JvmStatic
-    fun removeEye(state: BlockState, world: World, pos: BlockPos, player: PlayerEntity): ActionResult? {
-        if (EndNuhUhEvents.PRE_REMOVE.invoker().interact(pos, state, world, player)) return null
+    fun removeEye(state: BlockState, level: Level, pos: BlockPos, player: Player): InteractionResult? {
+        if (EndNuhUhEvents.PRE_REMOVE.invoker().interact(pos, state, level, player)) return null
 
-        if (state.getOrEmpty(EndPortalFrameBlock.EYE).getOrNull() == true && player.mainHandStack.isEmpty && player.isSneaking) {
-
-            world.method_8396(null, pos, SoundEvents.ENTITY_ENDER_EYE_LAUNCH, SoundCategory.BLOCKS, 0.5f, 3.2f)
-
-            val result = EndPortalFrameBlock.getCompletedFramePattern().searchAround(world, pos)
+        if (state.getOptionalValue(EndPortalFrameBlock.HAS_EYE).getOrNull() == true && player.mainHandItem.isEmpty
+            && player.isCrouching
+        ) {
+            level.playSound(null, pos, SoundEvents.ENDER_EYE_LAUNCH, SoundSource.BLOCKS, 0.5f, 3.2f)
+            val result = EndPortalFrameBlock.getOrCreatePortalShape().find(level, pos)
             if (result != null) {
-                val movingPos = result.frontTopLeft.add(-3, 0, -3)
+                val movingPos = result.frontTopLeft.offset(-3, 0, -3)
                 for (i in 0..2) {
                     for (j in 0..2) {
-                        val pos2 = movingPos.add(i, 0, j)
-                        if (world.getBlockState(pos2).isOf(Blocks.END_PORTAL)) {
-                            world.setBlockState(pos2, Blocks.AIR.defaultState, Block.NOTIFY_LISTENERS)
+                        val pos2 = movingPos.offset(i, 0, j)
+                        if (level.getBlockState(pos2).`is`(Blocks.END_PORTAL)) {
+                            level.setBlock(pos2, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL)
                         }
                     }
                 }
-                world.method_8396(null, pos, SoundEvents.BLOCK_END_PORTAL_SPAWN, SoundCategory.BLOCKS, 1.0f, 10.0f)
+                level.playSound(null, pos, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS, 1.0f, 10.0f)
             }
 
-            world.setBlockState(pos, state.with(EndPortalFrameBlock.EYE, false))
+            level.setBlock(pos, state.setValue(EndPortalFrameBlock.HAS_EYE, false), Block.UPDATE_ALL)
 
-            if (!player.isInCreativeMode) {
+            if (!player.isCreative) {
                 val item = ItemEntity(
-                    world,
+                    level,
                     pos.x + 0.5,
                     pos.y + 0.98,
                     pos.z + 0.5,
-                    Items.ENDER_EYE.defaultStack
+                    Items.ENDER_EYE.defaultInstance
                 )
-                item.setVelocity(0.0, 0.0, 0.0)
-                world.spawnEntity(item)
-            } else if (!player.getInventory().contains(Items.ENDER_EYE.defaultStack)) {
-                player.getInventory().insertStack(Items.ENDER_EYE.defaultStack)
+                item.setDeltaMovement(0.0, 0.0, 0.0)
+                level.addFreshEntity(item)
+            } else if (!player.getInventory().contains(Items.ENDER_EYE.defaultInstance)) {
+                player.getInventory().add(Items.ENDER_EYE.defaultInstance)
             }
-            return ActionResult.SUCCESS
+            return InteractionResult.SUCCESS
         }
         return null
     }

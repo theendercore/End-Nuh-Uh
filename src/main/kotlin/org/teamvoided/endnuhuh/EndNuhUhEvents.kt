@@ -2,14 +2,14 @@ package org.teamvoided.endnuhuh
 
 import net.fabricmc.fabric.api.event.Event
 import net.fabricmc.fabric.api.event.EventFactory
-import net.minecraft.block.BlockState
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
+import net.minecraft.core.BlockPos
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.state.BlockState
 
 object EndNuhUhEvents {
     fun interface PreInsertCallback {
-        fun interact(pos: BlockPos, state: BlockState, world: World, player: PlayerEntity): Boolean
+        fun interact(pos: BlockPos, state: BlockState, world: Level, player: Player): Boolean
     }
 
     /** Event fired before eye insertion code.

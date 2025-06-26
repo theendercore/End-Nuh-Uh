@@ -1,27 +1,27 @@
 package org.teamvoided.endnuhuh.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.EndPortalFrameBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.EndPortalFrameBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 import static org.teamvoided.endnuhuh.EndLogic.removeEye;
 
 
-@Mixin(AbstractBlock.class)
+@Mixin(BlockBehaviour.class)
 public abstract class AbstractBlockMixin {
-    @ModifyReturnValue(method = "onUse", at = @At("RETURN"))
-    private ActionResult onUse(ActionResult orignal, BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hitResult) {
-        if (((AbstractBlock) (Object) this) instanceof EndPortalFrameBlock) {
-            var actionResult = removeEye(state, world, pos, player);
-            if (actionResult != null) return actionResult;
+    @ModifyReturnValue(method = "useWithoutItem", at = @At("RETURN"))
+    private InteractionResult onUse(InteractionResult orignal, BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (((BlockBehaviour) (Object) this) instanceof EndPortalFrameBlock) {
+            var result = removeEye(state, world, pos, player);
+            if (result != null) return result;
         }
         return orignal;
     }

@@ -1,6 +1,6 @@
 package org.teamvoided.endnuhuh
 
-import net.minecraft.util.Identifier
+import net.minecraft.resources.ResourceLocation
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -15,5 +15,5 @@ object EndNuhUh {
         log.info("End?? NUH UHH!!!!!!!")
     }
 
-    fun id(path: String) = Identifier.of(MODID, path)
+    fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(MODID, path)
 }
