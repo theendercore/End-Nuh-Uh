@@ -1,4 +1,4 @@
-package org.teamvoided.endnuhuh
+package com.theendercore.endnuhuh
 
 import net.fabricmc.fabric.api.event.Event
 import net.fabricmc.fabric.api.event.EventFactory

@@ -1,4 +1,4 @@
-package org.teamvoided.endnuhuh
+package com.theendercore.endnuhuh
 
 import net.minecraft.core.BlockPos
 import net.minecraft.core.particles.DustParticleOptions

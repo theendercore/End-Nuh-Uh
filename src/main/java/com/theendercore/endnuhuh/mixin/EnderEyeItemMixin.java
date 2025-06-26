@@ -1,4 +1,4 @@
-package org.teamvoided.endnuhuh.mixin;
+package com.theendercore.endnuhuh.mixin;
 
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.EnderEyeItem;
@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static org.teamvoided.endnuhuh.EndLogic.tryDisablePortal;
+import static com.theendercore.endnuhuh.EndLogic.tryDisablePortal;
 
 
 @Debug(export = true)

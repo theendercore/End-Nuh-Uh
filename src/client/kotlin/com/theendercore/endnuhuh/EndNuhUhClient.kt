@@ -1,4 +1,4 @@
-package org.teamvoided.endnuhuh
+package com.theendercore.endnuhuh
 
 @Suppress("unused")
 object EndNuhUhClient{

@@ -21,12 +21,8 @@ repositories {
 println("Task: " + gradle.startParameter.taskNames.joinToString(","))
 
 modSettings {
-    entrypoint("main", "org.teamvoided.endnuhuh.EndNuhUh::init")
+    entrypoint("main", "com.theendercore.endnuhuh.EndNuhUh::init")
     mixinFile("${modId()}.mixins.json")
-//    entrypoint("client", "org.teamvoided.endnuuh.TemplateClient::init")
-//    entrypoint("fabric-datagen", "org.teamvoided.endnuuh.data.gen.TemplateData")
-
-//    mixinFile("${modId()}.client.mixins.json")
 }
 
 dependencies {

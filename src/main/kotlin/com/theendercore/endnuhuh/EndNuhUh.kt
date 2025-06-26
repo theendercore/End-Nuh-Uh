@@ -1,4 +1,4 @@
-package org.teamvoided.endnuhuh
+package com.theendercore.endnuhuh
 
 import net.minecraft.resources.ResourceLocation
 import org.slf4j.Logger

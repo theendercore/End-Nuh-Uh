@@ -1,4 +1,4 @@
-package org.teamvoided.endnuhuh.mixin;
+package com.theendercore.endnuhuh.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.core.BlockPos;
@@ -12,7 +12,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-import static org.teamvoided.endnuhuh.EndLogic.removeEye;
+import static com.theendercore.endnuhuh.EndLogic.removeEye;
 
 
 @Mixin(BlockBehaviour.class)
