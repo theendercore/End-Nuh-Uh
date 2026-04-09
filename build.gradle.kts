@@ -13,8 +13,19 @@ plugins {
 }
 
 repositories {
-    maven("https://teamvoided.org/releases")
-    maven("https://maven.terraformersmc.com/") { name = "Terraformers" }
+    maven("https://maven.fabricmc.net/")
+    maven("https://teamvoided.org/releases") { content { includeGroup("org.teamvoided") } }
+    maven("https://teamvoided.org/snapshots") { content { includeGroup("org.teamvoided") } }
+    maven("https://maven.fzzyhmstrs.me/") { name = "FzzyMaven"; content { includeGroup("me.fzzyhmstrs") } }
+    maven("https://maven.terraformersmc.com/") {
+        name = "Terraformers"
+        content {
+            includeGroup("com.terraformersmc")
+            includeGroup("dev.emi")
+        }
+    }
+    maven("https://api.modrinth.com/maven") { content { includeGroup("maven.modrinth") } }
+    mavenLocal()
     mavenCentral()
 }
 
@@ -23,11 +34,13 @@ println("Task: " + gradle.startParameter.taskNames.joinToString(","))
 modSettings {
     entrypoint("main", "com.theendercore.endnuhuh.EndNuhUh::init")
     mixinFile("${modId()}.mixins.json")
+    dependency("fzzy_config", "*")
 }
 
 dependencies {
     modImplementation(fileTree("libs"))
     modImplementation(libs.modmenu)
+    modImplementation(libs.fzzy.config)
 }
 
 loom {
@@ -88,4 +101,7 @@ uploadConfig {
     // Fabric Language Kotlin
     modrinthDependency("Ha28R6CL", uploadConfig.REQUIRED)
     curseDependency("fabric-language-kotlin", uploadConfig.REQUIRED)
+    // Fzzy Config
+    modrinthDependency("hYykXjDp", uploadConfig.REQUIRED)
+    curseDependency("fzzy-config", uploadConfig.REQUIRED)
 }

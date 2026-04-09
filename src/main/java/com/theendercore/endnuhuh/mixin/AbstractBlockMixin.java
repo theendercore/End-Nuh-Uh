@@ -17,12 +17,14 @@ import static com.theendercore.endnuhuh.EndLogic.removeEye;
 
 @Mixin(BlockBehaviour.class)
 public abstract class AbstractBlockMixin {
+
     @ModifyReturnValue(method = "useWithoutItem", at = @At("RETURN"))
-    private InteractionResult onUse(InteractionResult orignal, BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hitResult) {
+    private InteractionResult onUse(InteractionResult original, BlockState blockState, Level world, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (((BlockBehaviour) (Object) this) instanceof EndPortalFrameBlock) {
-            var result = removeEye(state, world, pos, player);
+            var result = removeEye(blockState, world, pos, player);
             if (result != null) return result;
         }
-        return orignal;
+        return original;
     }
+
 }

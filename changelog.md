@@ -1,1 +1,2 @@
-- 1.21.6 update
+- 1.21.11 update
+- added config

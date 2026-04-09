@@ -1,12 +1,14 @@
 [versions]
 kotlin = "2.1.20"
-fabric-loom = "1.10-SNAPSHOT"
+fabric-loom = "1.16-SNAPSHOT"
 iridium = "3.5.0"
 
-modmenu = "15.0.0-beta.3"
+fzzy_config = "0.7.6+1.21.11"
+modmenu = "17.0.0"
 
 [libraries]
 modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
+fzzy-config = { module = "me.fzzyhmstrs:fzzy_config", version.ref = "fzzy_config" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
